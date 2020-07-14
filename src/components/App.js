@@ -3,13 +3,12 @@ import SearchBar from './Searchbar';
 import youtube from '../apis/youtube';
 import VideoList from './VideoList';
 import VideoDetail from './VideoDetail';
-import { Link } from 'react-router-dom';
+
 class App extends React.Component {
     state = {
         videos: [],
         selectedVideo: null
     }
-    
     handleSubmit = async (termFromSearchBar) => {
         const response = await youtube.get('/search', {
             params: {
@@ -21,6 +20,19 @@ class App extends React.Component {
             videos: response.data.items
         })
     };
+        handlechlist = async (chid) => {
+            const response1 = await youtube.get('/search', {
+                params: {
+                type:'video',
+                order:'viewCount',
+                channelId:chid
+                }
+                
+            })
+        
+            
+        }
+
     handleVideoSelect = (video) => {
         this.setState({selectedVideo: video})
     }
@@ -28,18 +40,16 @@ class App extends React.Component {
     render() {
         return (
             <div className='ui container' style={{marginTop: '1em'}}>
-               
                 <SearchBar handleFormSubmit={this.handleSubmit}/>
                 <div className='ui grid'>
-                <div className="wide">
-                            <VideoDetail video={this.state.selectedVideo}/>
-                        </div>
                     <div className="ui row">
-                        
-                        <div className="wide column">
-                            <VideoList handleVideoSelect={this.handleVideoSelect} videos={this.state.videos}/>
+                        <div className="eleven wide column">
+                            <VideoDetail video={this.handlechlist}/>
                         </div>
-                      
+                        <div className="five wide column">
+                            <VideoList handleVideoSelect={this.handleVideoSelect} videos={this.state.videos} chann={this.handlechlist}/>
+                          
+                        </div>
                     </div>
                 </div>
             </div>
