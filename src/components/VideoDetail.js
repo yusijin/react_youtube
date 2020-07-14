@@ -4,13 +4,15 @@ const VideoDetail = ({video}) => {
     if (!video) {
         return <div>Loading ...</div>;
     }
-
-    const videoSrc = `https://www.youtube.com/embed/${video.id.videoId}`;
-    console.log(typeof(video));
+    console.log(video);
+    const videoSrc = `https://www.youtube.com/channel/${video.snippet.thumbnails.medium}`;
+    console.log(typeof(video.video));
     return (
         <div>
-            <div className='ui embed'>
-                <iframe src={videoSrc} allowFullScreen title='Video player'/>
+            <div className='ui embed' >
+            
+                <img src={video.snippet.thumbnails.medium.url} ></img>
+                
             </div>
             <div className='ui segment'>
                 <h4 className='ui header'>{video.snippet.title}</h4>
